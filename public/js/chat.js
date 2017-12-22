@@ -1,4 +1,4 @@
-const Chat = function(socket) {
+export default const Chat = function(socket) {
   this.socket = socket;
 };
 
