@@ -7,7 +7,6 @@ channel.subscriptions = {};  // 订阅
 
 // 加入聊天室时
 channel.on('join', function(id, client) {
-  console.log('join');
   this.clients[id] = client;
   this.subscriptions[id] = function(senderId, message) {
     if (id != senderId) {
@@ -24,6 +23,11 @@ channel.on('leave', function(id) {
   channel.emit('broadcast', id, `${id} has left the chat.\n`);
 });
 
+channel.on('shutdown', function() {
+  channel.emit('broadcast', 'Chat has shut down.\n');
+  channel.removeAllListeners('broadcast');
+});
+
 const server = net.createServer(function(client) {
   let id = `${client.remoteAddress}: ${client.remotePort}`;
 
@@ -34,6 +38,9 @@ const server = net.createServer(function(client) {
   // 有数据时广播
   client.on('data', (data) => {
     data = data.toString();
+    if (data == 'shutdown\r\n') {
+      channel.emit('shutdown');
+    }
     channel.emit('broadcast', id, data);
   });
   // 关闭时触发离开
