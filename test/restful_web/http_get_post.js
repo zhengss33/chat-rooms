@@ -30,6 +30,7 @@ const server = http.createServer(function(req, res) {
       id = parseInt(path.slice(1), 10);
       item = '';
 
+      req.setEncoding('utf-8');
       req.on('data', (chunk) => {
         item += chunk;
       });
