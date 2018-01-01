@@ -7,11 +7,9 @@ const server = http.createServer(function(req, res) {
       show(res);
       break;
 
-      case 'POST':
-        upload(req, res);
-        break;
-    default:
-
+    case 'POST':
+      upload(req, res);
+      break;
   }
 });
 
