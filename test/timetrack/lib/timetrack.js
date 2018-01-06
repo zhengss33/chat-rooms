@@ -107,3 +107,32 @@ exports.workHitlistHtml = function(rows) {
   html += '</table>';
   return html;
 }
+
+exports.workFormHtml = function() {
+  let html = `
+    <form method="POST" action="/">
+      <p>
+        Date (YYYY-MM-DD):<br/>
+        <input type="text" name="date"/>
+      </p>
+      <p>
+        Hours worked: <br/>
+        <input type="text" name="hours"/>
+      </p>
+      <p>
+        description: <br/>
+        <textarea name="description"></textarea>
+      </p>
+      <input type="submit" value="Add" />
+    </form>
+  `;
+  return html;
+}
+
+exports.workArchiveForm = function(id) {
+  return exports.actionForm(id, '/archive', 'Archive');
+}
+
+exports.workDeleteForm = function(id) {
+  return exports.actionForm(id, '/delete', 'Delete');
+}
