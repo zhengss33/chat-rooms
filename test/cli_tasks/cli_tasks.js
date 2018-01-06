@@ -7,7 +7,7 @@ let file = path.join(process.cwd(), '/.tasks');
 
 switch (command) {
   case 'add':
-    addTask(file, taskDescription);
+    addTask(flie, taskDescription);
     break;
 
   case 'list':
@@ -15,10 +15,10 @@ switch (command) {
     break;
 
   default:
-    console.log(`Usage ${process.argv[0]} add|list [taskDescription]`);
+    console.log(`usage ${process.argv[0]} add|list [description]`);
 }
 
-function loadOrInitializeTaskArray(file, cb) {
+function loadOrInitializeTasks(file, cb) {
   fs.exists(file, (exists) => {
     if (exists) {
       fs.readFile(file, 'utf-8', (err, data) => {
@@ -26,31 +26,32 @@ function loadOrInitializeTaskArray(file, cb) {
         let taskData = data.toString();
         let tasks = JSON.parse(taskData || '[]');
         cb(tasks);
-      })
+        }
+      });
     } else {
       cb([]);
     }
-  });
 }
 
-function listTasks(file) {
-  loadOrInitializeTaskArray(file, (tasks) => {
-    for (let i = 0; i < tasks.length; i++) {
+
+function listTasks(flie) {
+  loadOrInitializeTasks(flie, (tasks) => {
+    for (var i = 0; i < tasks.length; i++) {
       console.log(tasks[i]);
     }
   });
 }
 
-function addTask(file, taskDescription) {
-  loadOrInitializeTaskArray(file, (tasks) => {
+function addTask(flie, taskDescription) {
+  loadOrInitializeTasks(file, (tasks) => {
     tasks.push(taskDescription);
-    storeTasks(file, tasks);
+    storeTask(file, tasks);
   });
 }
 
-function storeTasks(file, tasks) {
+function storeTask(file, tasks) {
   fs.writeFile(file, JSON.stringify(tasks), 'utf-8', (err) => {
     if (err) throw err;
     console.log('Saved');
-  });
+  })
 }
