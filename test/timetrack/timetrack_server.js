@@ -4,9 +4,10 @@ const mysql = require('mysql');
 
 const db = mysql.createConnection({
   host: '127.0.0.1',
-  user: 'myUser',
-  password: 'mypassword',
+  user: 'root',
+  password: '123456',
   database: 'timetrack',
+  port: 3000,
 });
 
 const server = http.createServer(function(req, res) {
@@ -21,7 +22,7 @@ const server = http.createServer(function(req, res) {
           work.archive(db, req, res);
           break;
 
-        case 'delete':
+        case '/delete':
           work.delete(db, req, res);
           break;
       }
@@ -43,10 +44,10 @@ const server = http.createServer(function(req, res) {
 
 db.query(
   "CREATE TABLE IF NOT EXISTS work ("
-  + "id INT(10) NOT AUTO INCREMENt, "
+  + "id INT(10) NOT NULL AUTO_INCREMENT, "
   + "hours DECIMAL(5, 2) DEFAULT 0, "
   + "date DATE, "
-  + "archive INT(1) DEFAULT 0, "
+  + "archived INT(1) DEFAULT 0, "
   + "description LONGTEXT,"
   + "PRIMARY KEY(id))",
   function(err) {

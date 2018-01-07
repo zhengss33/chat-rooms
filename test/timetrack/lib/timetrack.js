@@ -75,7 +75,7 @@ exports.show = function(db, res, showArchived) {
   db.query(
     query,
     [archiveValue],
-    function(err) {
+    function(err, rows) {
       if (err) throw err;
       let html = (showArchived)
         ? ''
@@ -101,7 +101,7 @@ exports.workHitlistHtml = function(rows) {
     if (!rows[i].archived) {
       html += '<td>' + exports.workArchiveForm(rows[i].id) + '</td>';
     }
-    html += '<td>' + exports.workArchiveForm(rows[i].id) + '</td>';
+    html += '<td>' + exports.workDeleteForm(rows[i].id) + '</td>';
     html += '</tr>';
   }
   html += '</table>';
