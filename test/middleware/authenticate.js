@@ -37,6 +37,7 @@ function restrict(req, res, next) {
   let auth = new Buffer(parts[1], 'base64').toString().split(':');
   let user = auth[0];
   let pass = auth[1];
+  console.log(user, pass);
 
   authenticateWithDatabase(user, pass, (err) => {
     if (err) return next(err);
@@ -52,7 +53,7 @@ function admin(req, res, next) {
 
     case '/users':
       res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify('tobi', 'loki'));
-      break;  
+      res.end(JSON.stringify(['tobi', 'loki']));
+      break;
   }
 }
