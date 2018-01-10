@@ -2,11 +2,12 @@ const parse = require('url').parse;
 
 module.exports = function router (obj) {
   return function (req, res, next) {
-    if (!obj[req.method]) {
+    let routes = obj[req.method];
+    if (!routes) {
       next();
       return;
     }
-    let routes = obj[req.method];
+
     let paths = Object.keys(routes);
     let url = parse(req.url);
 
@@ -18,7 +19,8 @@ module.exports = function router (obj) {
       let reg = new RegExp('^' + path + '$');
       let captures = url.pathname.match(reg);
       if (captures) {
-        fn(...[req, res, ...(captures.slice(1))]);
+        let id = captures.slice(1);
+        fn(req, res, id);
         return;
       }
     }
