@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "connect": "^3.6.5",
+    "cookie-parser": "^1.4.3",
     "formidable": "^1.1.1",
     "htmlparser": "^1.7.7",
     "mime": "~1.2.7",
